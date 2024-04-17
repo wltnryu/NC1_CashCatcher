@@ -14,6 +14,13 @@ class HistoryData: ObservableObject {
         formattedDate(date: createDate(day: 8, month: 4)) : [
             History(icon: "list_fork", category: "식사", amount: 3500),
             History(icon: "list_health", category: "건강", amount: 61200)
+        ],
+        formattedDate(date: createDate(day: 13, month: 4)) : [
+            History(icon: "list_celebrate", category: "유흥", amount: 24000),
+        ],
+        formattedDate(date: createDate(day: 14, month: 4)) : [
+            History(icon: "list_house", category: "생활", amount: 10000),
+            History(icon: "list_fork", category: "식사", amount: 2000)
         ]
     ]
 
@@ -143,8 +150,18 @@ struct ContentView: View {
                     .padding(.top, 23)
                 
                 
+//                List {
+//                    ForEach(Array(historyData.historyDictionary.keys.sorted(by: <).reversed()), id: \.self) { dateString in
+//                        Section(header: Text(dateString)){
+//                            ForEach(historyData.historyDictionary[dateString]!, id: \.self) { history in
+//                                HistoryRow(history: history)
+//                            }
+//                        }
+//                    }
+//                }
+                // ContentView의 List 부분 수정
                 List {
-                    ForEach(Array(historyData.historyDictionary.keys.sorted(by: >).reversed()), id: \.self) { dateString in
+                    ForEach(Array(historyData.historyDictionary.keys.sorted(by: { dateFromString($0)! > dateFromString($1)! })), id: \.self) { dateString in
                         Section(header: Text(dateString)){
                             ForEach(historyData.historyDictionary[dateString]!, id: \.self) { history in
                                 HistoryRow(history: history)
@@ -236,6 +253,14 @@ func currentWeekNumber() -> Int {
     let date = Date()
     let weekNumber = calendar.component(.weekOfMonth, from: date)
     return weekNumber
+}
+
+// 날짜 문자열을 Date 객체로 변환하는 함수
+func dateFromString(_ dateString: String) -> Date? {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "M/d(E)"
+    dateFormatter.locale = Locale(identifier: "ko_KR")
+    return dateFormatter.date(from: dateString)
 }
 
                    
