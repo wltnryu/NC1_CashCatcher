@@ -2,6 +2,7 @@
 
 import SwiftUI
 import Combine
+import SwiftData
 
 class HistoryData: ObservableObject {
     @Published var historyDictionary: [String: [History]] = [
@@ -31,12 +32,17 @@ class HistoryData: ObservableObject {
 struct ContentView: View {
     
     @EnvironmentObject var historyData : HistoryData
+    
     @Environment(\.modelContext) var modelContext
+    @Query private var expenses: Expenses
+    
+    private let first_expense : Expenses = .init(month: 4, month_ex: 500000, firstWeek_ex: 100000, secondWeek_ex: 100000, thirdWeek_ex: 100000, fourthWeek_ex: 100000, fifthWeek_ex: 50000)
     
     @State var isPresented: Bool = false
     @State var isChangePresented: Bool = false
     @State private var showingPicker = false
     @State private var showingSheet = false
+    @State var expense : Int = 0
     
     @State private var selectedDate: Date = .now
     
@@ -121,7 +127,7 @@ struct ContentView: View {
                         }
                         
                         HStack {
-                            Text("46,000원")
+                            Text("\(expense)원")
                                 .font(.system(size: 32, weight: .bold))
                                 .foregroundColor(.white)
                             
@@ -178,6 +184,25 @@ struct ContentView: View {
                     .accentColor(Color(hex: 0xFF9500))
             }
         }.animation(.easeInOut, value: showingPicker)
+            .onAppear {
+                
+                if currentWeekNumber() == 1 {
+                    expense = first_expense.firstWeek_ex
+                }
+                else if currentWeekNumber() == 2 {
+                    expense = first_expense.secondWeek_ex
+                }
+                else if currentWeekNumber() == 3 {
+                    expense = first_expense.thirdWeek_ex
+                }
+                else if currentWeekNumber() == 4 {
+                    expense = first_expense.fourthWeek_ex
+                }
+                else if currentWeekNumber() == 4 {
+                    expense = first_expense.fourthWeek_ex
+                }
+                
+            }
     }
 }
 
@@ -199,6 +224,13 @@ func formattedDate(date: Date) -> String {
     dateFormatter.dateFormat = "M/d(EEE)"
     dateFormatter.locale = Locale(identifier: "ko_KR")
     return dateFormatter.string(from: date)
+}
+
+func currentWeekNumber() -> Int {
+    let calendar = Calendar.current
+    let date = Date()
+    let weekNumber = calendar.component(.weekOfMonth, from: date)
+    return weekNumber
 }
 
                    
