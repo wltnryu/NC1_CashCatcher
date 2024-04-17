@@ -63,9 +63,7 @@ struct DivideView: View {
                 
                 if selectedWeek == "일시불" {
                     let amount = Double(historyModel.amount)
-                    print("변환 전 amount: \(historyModel.amount), 변환 후 amount: \(amount)")
                     self.dividedAmount = roundUpToTensPlace(amount)
-                    print("계산 후 dividedAmount: \(self.dividedAmount)")
                 }
                 else if selectedWeek == "2주" {
                     let dividedAmount = Double(historyModel.amount) / 2
@@ -92,7 +90,6 @@ struct DivideView: View {
                 }
                 
                 //예시
-                print("\(self.dividedAmount)")
                 print("잔여 생활비: \(expenses[0].thirdWeek_ex - self.dividedAmount)")
                 
                 let history = History(icon: historyModel.icon, category: historyModel.category, amount: dividedAmount)
@@ -122,13 +119,31 @@ struct DivideView: View {
                 }
             })
         }.onAppear {
-            print("\(expenses[0].thirdWeek_ex)")
+            
+            if currentWeekNumber() == 1 {
+                print("firstWeek : \(expenses[0].firstWeek_ex)")
+            } else if currentWeekNumber() == 2 {
+                print("secondWeek : \(expenses[0].secondWeek_ex)")
+            } else if currentWeekNumber() == 3 {
+                print("thirdWeek : \(expenses[0].thirdWeek_ex)")
+            } else if currentWeekNumber() == 4 {
+                print("fourthWeek : \(expenses[0].fourthWeek_ex)")
+            } else if currentWeekNumber() == 5 {
+                print("fifthWeek : \(expenses[0].fifthWeek_ex)")
+            }
         }
     }
     
     func roundUpToTensPlace(_ value: Double) -> Int {
         let roundedValue = (value / 10).rounded(.up) * 10
         return Int(roundedValue)
+    }
+    
+    func currentWeekNumber() -> Int {
+        let calendar = Calendar.current
+        let date = Date()
+        let weekNumber = calendar.component(.weekOfMonth, from: date)
+        return weekNumber
     }
 
 }
