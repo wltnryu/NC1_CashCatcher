@@ -28,6 +28,8 @@ struct CategoryView: View {
     @EnvironmentObject var historyModel : HistoryModel
     @State var selectedCategory: String = ""
     @State var selectedIcon: String = ""
+    
+    @Binding var expense : Int
             
     var body: some View {
         
@@ -511,7 +513,7 @@ struct CategoryView: View {
                 Spacer()
                 
                 ZStack{
-                    NavigationLink(destination: SpendView(isPresented: $isPresented), isActive: $tag) {
+                    NavigationLink(destination: SpendView(isPresented: $isPresented, expense: $expense), isActive: $tag) {
                         EmptyView()
                     }.navigationTitle("")
                 }
@@ -541,13 +543,6 @@ struct CategoryView: View {
             }
         }.accentColor(.black)
         .navigationViewStyle(.stack) 
-    }
-}
-
-struct CategoryView_Previews: PreviewProvider {
-    static var previews: some View {
-        let historyModel = HistoryModel()
-        CategoryView(isPresented: .constant(true)).environmentObject(historyModel)
     }
 }
 

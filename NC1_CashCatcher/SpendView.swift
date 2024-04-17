@@ -6,16 +6,18 @@ struct SpendView : View {
     @State private var spendTag : Bool = false
     
     @Binding var isPresented: Bool
+    @Binding var expense : Int
     
     @EnvironmentObject var historyModel : HistoryModel
     
     private var numberFormatter : NumberFormatter
         
-    init(numberFormatter: NumberFormatter = NumberFormatter(), isPresented: Binding<Bool>) {
+    init(numberFormatter: NumberFormatter = NumberFormatter(), isPresented: Binding<Bool>, expense: Binding<Int>) {
         self.numberFormatter = numberFormatter
         self.numberFormatter.numberStyle = .decimal
         self.numberFormatter.maximumFractionDigits = 0
         self._isPresented = isPresented
+        self._expense = expense
     }
     
     var body: some View {
@@ -74,18 +76,12 @@ struct SpendView : View {
                 }
             })
             
-            NavigationLink(destination: DivideView(isPresented: $isPresented), isActive: $spendTag) {
+            NavigationLink(destination: DivideView(isPresented: $isPresented, expense: $expense), isActive: $spendTag) {
                 EmptyView()
             }
             
         }.onAppear {
             print("SpendView onAppear: \(spendTag)")
         }
-    }
-}
-
-struct SpendView_Previews : PreviewProvider {
-    static var previews: some View {
-        SpendView(isPresented: .constant(true))
     }
 }

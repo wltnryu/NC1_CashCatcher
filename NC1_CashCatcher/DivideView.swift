@@ -22,6 +22,7 @@ struct DivideView: View {
     
     @State private var selectedWeek = "일시불"
     @Binding var isPresented: Bool
+    @Binding var expense : Int
     
     var body: some View {
         VStack {
@@ -59,35 +60,55 @@ struct DivideView: View {
             
             Button(action: {
                 
-                print("\(selectedWeek)")
-                
                 if selectedWeek == "일시불" {
                     let amount = Double(historyModel.amount)
                     self.dividedAmount = roundUpToTensPlace(amount)
+                    expense = expense - self.dividedAmount
                 }
                 else if selectedWeek == "2주" {
                     let dividedAmount = Double(historyModel.amount) / 2
                     
                     self.dividedAmount = roundUpToTensPlace(dividedAmount)
+                    expense = expense - self.dividedAmount
                     
                     print(roundUpToTensPlace(dividedAmount))
                 } else if selectedWeek == "3주" {
                     let dividedAmount = Double(historyModel.amount) / 3
                     
                     self.dividedAmount = roundUpToTensPlace(dividedAmount)
+                    expense = expense - self.dividedAmount
                     
                     print(roundUpToTensPlace(dividedAmount))
                 } else if selectedWeek == "4주" {
                     let dividedAmount = Double(historyModel.amount) / 4
                     
                     self.dividedAmount = roundUpToTensPlace(dividedAmount)
+                    expense = expense - self.dividedAmount
                     
                     print(roundUpToTensPlace(dividedAmount))
                 } else if selectedWeek == "5주" {
                     let dividedAmount = Double(historyModel.amount) / 5
                     
                     self.dividedAmount = roundUpToTensPlace(dividedAmount)
+                    expense = expense - self.dividedAmount
                 }
+                
+//                if currentWeekNumber() == 1 {
+//                    print("firstWeek : \(expenses[0].firstWeek_ex)")
+//                    expenses[0].firstWeek_ex = expenses[0].firstWeek_ex - self.dividedAmount
+//                } else if currentWeekNumber() == 2 {
+//                    print("secondWeek : \(expenses[0].secondWeek_ex)")
+//                    expenses[0].secondWeek_ex = expenses[0].secondWeek_ex - self.dividedAmount
+//                } else if currentWeekNumber() == 3 {
+//                    print("thirdWeek : \(expenses[0].thirdWeek_ex)")
+//                    expenses[0].thirdWeek_ex = expenses[0].thirdWeek_ex - self.dividedAmount
+//                } else if currentWeekNumber() == 4 {
+//                    print("fourthWeek : \(expenses[0].fourthWeek_ex)")
+//                    expenses[0].fourthWeek_ex = expenses[0].fourthWeek_ex - self.dividedAmount
+//                } else if currentWeekNumber() == 5 {
+//                    print("fifthWeek : \(expenses[0].fifthWeek_ex)")
+//                    expenses[0].fifthWeek_ex = expenses[0].fifthWeek_ex - self.dividedAmount
+//                }
                 
                 //예시
                 print("잔여 생활비: \(expenses[0].thirdWeek_ex - self.dividedAmount)")

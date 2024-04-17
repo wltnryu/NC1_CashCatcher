@@ -87,7 +87,7 @@ struct ContentView: View {
                             .frame(width: 25, height: 25)
                             .foregroundColor(Color(hex: 0xBFBFBF))
                             .fullScreenCover(isPresented: $isPresented, content: {
-                                CategoryView(isPresented: $isPresented)
+                                CategoryView(isPresented: $isPresented, expense: $expense)
                             })
                     })
                     .padding(.trailing, 26)
@@ -183,6 +183,13 @@ struct ContentView: View {
             }
         }.animation(.easeInOut, value: showingPicker)
             .onAppear {
+                
+                // 일시적인 값 > 수정 필요
+                expenses[0].firstWeek_ex = 100000
+                expenses[0].secondWeek_ex = 100000
+                expenses[0].thirdWeek_ex = 100000
+                expenses[0].fourthWeek_ex = 100000
+                expenses[0].fifthWeek_ex = 100000
                 
                 if currentWeekNumber() == 1 {
                     expense = expenses[0].firstWeek_ex

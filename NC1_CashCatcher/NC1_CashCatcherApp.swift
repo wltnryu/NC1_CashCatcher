@@ -6,7 +6,7 @@ import SwiftData
 @main
 struct NC1_CashCatcherApp: App {
     var modelContainer: ModelContainer = {
-        let schema = Schema([Expenses.self])
+        let schema = Schema([Expenses.self, Histories.self, Consumption.self])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
         
         do {
