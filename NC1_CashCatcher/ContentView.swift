@@ -34,9 +34,7 @@ struct ContentView: View {
     @EnvironmentObject var historyData : HistoryData
     
     @Environment(\.modelContext) var modelContext
-    @Query private var expenses: Expenses
-    
-    private let first_expense : Expenses = .init(month: 4, month_ex: 500000, firstWeek_ex: 100000, secondWeek_ex: 100000, thirdWeek_ex: 100000, fourthWeek_ex: 100000, fifthWeek_ex: 50000)
+    @Query private var expenses: [Expenses]
     
     @State var isPresented: Bool = false
     @State var isChangePresented: Bool = false
@@ -187,19 +185,19 @@ struct ContentView: View {
             .onAppear {
                 
                 if currentWeekNumber() == 1 {
-                    expense = first_expense.firstWeek_ex
+                    expense = expenses[0].firstWeek_ex
                 }
                 else if currentWeekNumber() == 2 {
-                    expense = first_expense.secondWeek_ex
+                    expense = expenses[0].secondWeek_ex
                 }
                 else if currentWeekNumber() == 3 {
-                    expense = first_expense.thirdWeek_ex
+                    expense = expenses[0].thirdWeek_ex
                 }
                 else if currentWeekNumber() == 4 {
-                    expense = first_expense.fourthWeek_ex
+                    expense = expenses[0].fourthWeek_ex
                 }
                 else if currentWeekNumber() == 4 {
-                    expense = first_expense.fourthWeek_ex
+                    expense = expenses[0].fourthWeek_ex
                 }
                 
             }

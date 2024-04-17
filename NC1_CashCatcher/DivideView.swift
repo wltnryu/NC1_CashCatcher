@@ -7,6 +7,7 @@
 
 import SwiftUI
 import Foundation
+import SwiftData
 
 struct DivideView: View {
     
@@ -16,7 +17,10 @@ struct DivideView: View {
     @EnvironmentObject var historyModel : HistoryModel
     @EnvironmentObject var historyData : HistoryData
     
-    @State private var selectedWeek = ""
+    @Environment(\.modelContext) var modelContext
+    @Query private var expenses: [Expenses]
+    
+    @State private var selectedWeek = "일시불"
     @Binding var isPresented: Bool
     
     var body: some View {
@@ -55,12 +59,16 @@ struct DivideView: View {
             
             Button(action: {
                 
+                print("\(selectedWeek)")
+                
                 if selectedWeek == "일시불" {
-                    print(historyModel.amount)
-                    
-                    self.dividedAmount = historyModel.amount
-                } else if selectedWeek == "2주" {
-                    var dividedAmount = Double(historyModel.amount) / 2
+                    let amount = Double(historyModel.amount)
+                    print("변환 전 amount: \(historyModel.amount), 변환 후 amount: \(amount)")
+                    self.dividedAmount = roundUpToTensPlace(amount)
+                    print("계산 후 dividedAmount: \(self.dividedAmount)")
+                }
+                else if selectedWeek == "2주" {
+                    let dividedAmount = Double(historyModel.amount) / 2
                     
                     self.dividedAmount = roundUpToTensPlace(dividedAmount)
                     
@@ -81,9 +89,11 @@ struct DivideView: View {
                     let dividedAmount = Double(historyModel.amount) / 5
                     
                     self.dividedAmount = roundUpToTensPlace(dividedAmount)
-                    
-                    print(roundUpToTensPlace(dividedAmount))
                 }
+                
+                //예시
+                print("\(self.dividedAmount)")
+                print("잔여 생활비: \(expenses[0].thirdWeek_ex - self.dividedAmount)")
                 
                 let history = History(icon: historyModel.icon, category: historyModel.category, amount: dividedAmount)
                 
@@ -112,7 +122,7 @@ struct DivideView: View {
                 }
             })
         }.onAppear {
-            print("DivideView onAppear: \(isPresented)")
+            print("\(expenses[0].thirdWeek_ex)")
         }
     }
     
@@ -121,10 +131,4 @@ struct DivideView: View {
         return Int(roundedValue)
     }
 
-}
-
-struct DivideView_Previews : PreviewProvider {
-    static var previews: some View {
-        DivideView(isPresented: .constant(true))
-    }
 }
