@@ -148,18 +148,7 @@ struct ContentView: View {
                     .frame(height: 8)
                     .foregroundColor(Color(hex: 0xE5E5EA))
                     .padding(.top, 23)
-                
-                
-//                List {
-//                    ForEach(Array(historyData.historyDictionary.keys.sorted(by: <).reversed()), id: \.self) { dateString in
-//                        Section(header: Text(dateString)){
-//                            ForEach(historyData.historyDictionary[dateString]!, id: \.self) { history in
-//                                HistoryRow(history: history)
-//                            }
-//                        }
-//                    }
-//                }
-                // ContentView의 List 부분 수정
+
                 List {
                     ForEach(Array(historyData.historyDictionary.keys.sorted(by: { dateFromString($0)! > dateFromString($1)! })), id: \.self) { dateString in
                         Section(header: Text(dateString)){
@@ -262,10 +251,3 @@ func dateFromString(_ dateString: String) -> Date? {
     dateFormatter.locale = Locale(identifier: "ko_KR")
     return dateFormatter.date(from: dateString)
 }
-
-                   
-//struct ContentView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        ContentView()
-//    }
-//}
