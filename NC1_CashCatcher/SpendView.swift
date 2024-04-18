@@ -78,7 +78,7 @@ struct SpendView : View {
             
             NavigationLink(destination: DivideView(isPresented: $isPresented, expense: $expense), isActive: $spendTag) {
                 EmptyView()
-            }
+            }.navigationTitle("")
             
         }.onAppear {
             print("SpendView onAppear: \(spendTag)")

@@ -182,27 +182,10 @@ struct ContentView: View {
                     }
             
                 YearMonthPickerView(viewModel: viewModel, showingPicker: $showingPicker, selectedDate: $selectedDate)
-                
-//                DatePicker("", selection: $selectedDate, displayedComponents: .date)
-//                    .labelsHidden()
-//                    .datePickerStyle(.graphical)
-//                    .padding(8)
-//                    .background(.bar)
-//                    .cornerRadius(8)
-//                    .shadow(radius: 3)
-//                    .transition(.scale)
-//                    .padding()
-//                    .accentColor(Color(hex: 0xFF9500))
             }
+            
         }.animation(.easeInOut, value: showingPicker)
             .onAppear {
-                
-                // 일시적인 값 > 수정 필요
-                expenses[0].firstWeek_ex = 100000
-                expenses[0].secondWeek_ex = 100000
-                expenses[0].thirdWeek_ex = 100000
-                expenses[0].fourthWeek_ex = 100000
-                expenses[0].fifthWeek_ex = 100000
                 
                 if currentWeekNumber() == 1 {
                     expense = expenses[0].firstWeek_ex
