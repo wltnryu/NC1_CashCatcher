@@ -45,7 +45,10 @@ struct ContentView: View {
     
     @State var isPresented: Bool = false
     @State var isChangePresented: Bool = false
+    
     @State private var showingPicker = false
+    @ObservedObject var viewModel = DateSelectionViewModel()
+    
     @State private var showingSheet = false
     @State var expense : Int = 0
     
@@ -115,7 +118,9 @@ struct ContentView: View {
                             Spacer()
                             
                             Button(action: {
+                                
                                 self.showingSheet = true
+                                
                             }, label: {
                                 Image(systemName: "ellipsis")
                                     .foregroundColor(.white)
@@ -175,17 +180,19 @@ struct ContentView: View {
                     .onTapGesture {
                         showingPicker = false
                     }
+            
+                YearMonthPickerView(viewModel: viewModel, showingPicker: $showingPicker, selectedDate: $selectedDate)
                 
-                DatePicker("", selection: $selectedDate, displayedComponents: .date)
-                    .labelsHidden()
-                    .datePickerStyle(.graphical)
-                    .padding(8)
-                    .background(.bar)
-                    .cornerRadius(8)
-                    .shadow(radius: 3)
-                    .transition(.scale)
-                    .padding()
-                    .accentColor(Color(hex: 0xFF9500))
+//                DatePicker("", selection: $selectedDate, displayedComponents: .date)
+//                    .labelsHidden()
+//                    .datePickerStyle(.graphical)
+//                    .padding(8)
+//                    .background(.bar)
+//                    .cornerRadius(8)
+//                    .shadow(radius: 3)
+//                    .transition(.scale)
+//                    .padding()
+//                    .accentColor(Color(hex: 0xFF9500))
             }
         }.animation(.easeInOut, value: showingPicker)
             .onAppear {
