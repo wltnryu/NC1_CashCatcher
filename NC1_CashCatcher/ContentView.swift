@@ -40,9 +40,6 @@ struct ContentView: View {
     
     @EnvironmentObject var historyData : HistoryData
     
-    @Environment(\.modelContext) var modelContext
-    @Query private var expenses: [Expenses]
-    
     @State var isPresented: Bool = false
     @State var isChangePresented: Bool = false
     
@@ -50,7 +47,7 @@ struct ContentView: View {
     @ObservedObject var viewModel = DateSelectionViewModel()
     
     @State private var showingSheet = false
-    @State var expense : Int = 0
+    @State var expense : Int = 100000
     
     @State private var selectedDate: Date = .now
     
@@ -185,25 +182,6 @@ struct ContentView: View {
             }
             
         }.animation(.easeInOut, value: showingPicker)
-            .onAppear {
-                
-                if currentWeekNumber() == 1 {
-                    expense = expenses[0].firstWeek_ex
-                }
-                else if currentWeekNumber() == 2 {
-                    expense = expenses[0].secondWeek_ex
-                }
-                else if currentWeekNumber() == 3 {
-                    expense = expenses[0].thirdWeek_ex
-                }
-                else if currentWeekNumber() == 4 {
-                    expense = expenses[0].fourthWeek_ex
-                }
-                else if currentWeekNumber() == 4 {
-                    expense = expenses[0].fourthWeek_ex
-                }
-                
-            }
     }
 }
 

@@ -17,9 +17,6 @@ struct DivideView: View {
     @EnvironmentObject var historyModel : HistoryModel
     @EnvironmentObject var historyData : HistoryData
     
-    @Environment(\.modelContext) var modelContext
-    @Query private var expenses: [Expenses]
-    
     @State private var selectedWeek = "일시불"
     @Binding var isPresented: Bool
     @Binding var expense : Int
@@ -93,37 +90,34 @@ struct DivideView: View {
                     expense = expense - self.dividedAmount
                 }
                 
-//                if currentWeekNumber() == 1 {
-//                    print("firstWeek : \(expenses[0].firstWeek_ex)")
-//                    expenses[0].firstWeek_ex = expenses[0].firstWeek_ex - self.dividedAmount
-//                } else if currentWeekNumber() == 2 {
-//                    print("secondWeek : \(expenses[0].secondWeek_ex)")
-//                    expenses[0].secondWeek_ex = expenses[0].secondWeek_ex - self.dividedAmount
-//                } else if currentWeekNumber() == 3 {
-//                    print("thirdWeek : \(expenses[0].thirdWeek_ex)")
-//                    expenses[0].thirdWeek_ex = expenses[0].thirdWeek_ex - self.dividedAmount
-//                } else if currentWeekNumber() == 4 {
-//                    print("fourthWeek : \(expenses[0].fourthWeek_ex)")
-//                    expenses[0].fourthWeek_ex = expenses[0].fourthWeek_ex - self.dividedAmount
-//                } else if currentWeekNumber() == 5 {
-//                    print("fifthWeek : \(expenses[0].fifthWeek_ex)")
-//                    expenses[0].fifthWeek_ex = expenses[0].fifthWeek_ex - self.dividedAmount
-//                }
-                
-                //예시
-                print("잔여 생활비: \(expenses[0].thirdWeek_ex - self.dividedAmount)")
+                //                if currentWeekNumber() == 1 {
+                //                    print("firstWeek : \(expenses[0].firstWeek_ex)")
+                //                    expenses[0].firstWeek_ex = expenses[0].firstWeek_ex - self.dividedAmount
+                //                } else if currentWeekNumber() == 2 {
+                //                    print("secondWeek : \(expenses[0].secondWeek_ex)")
+                //                    expenses[0].secondWeek_ex = expenses[0].secondWeek_ex - self.dividedAmount
+                //                } else if currentWeekNumber() == 3 {
+                //                    print("thirdWeek : \(expenses[0].thirdWeek_ex)")
+                //                    expenses[0].thirdWeek_ex = expenses[0].thirdWeek_ex - self.dividedAmount
+                //                } else if currentWeekNumber() == 4 {
+                //                    print("fourthWeek : \(expenses[0].fourthWeek_ex)")
+                //                    expenses[0].fourthWeek_ex = expenses[0].fourthWeek_ex - self.dividedAmount
+                //                } else if currentWeekNumber() == 5 {
+                //                    print("fifthWeek : \(expenses[0].fifthWeek_ex)")
+                //                    expenses[0].fifthWeek_ex = expenses[0].fifthWeek_ex - self.dividedAmount
+                //                }
                 
                 let history = History(icon: historyModel.icon, category: historyModel.category, amount: dividedAmount)
                 
                 // 현재 날짜를 생성
                 let currentDate = Date()
-
+                
                 // 현재 날짜를 "M/d(EEE)" 형식의 문자열로 변환
                 let dateString = formattedDate(date: currentDate)
-
+                
                 // 변환된 문자열 날짜와 함께 addHistory 함수 호출
                 historyData.addHistory(history: history, date: dateString)
-
+                
                 
                 isPresented = false
                 
@@ -139,19 +133,6 @@ struct DivideView: View {
                         .foregroundColor(.white)
                 }
             })
-        }.onAppear {
-            
-            if currentWeekNumber() == 1 {
-                print("firstWeek : \(expenses[0].firstWeek_ex)")
-            } else if currentWeekNumber() == 2 {
-                print("secondWeek : \(expenses[0].secondWeek_ex)")
-            } else if currentWeekNumber() == 3 {
-                print("thirdWeek : \(expenses[0].thirdWeek_ex)")
-            } else if currentWeekNumber() == 4 {
-                print("fourthWeek : \(expenses[0].fourthWeek_ex)")
-            } else if currentWeekNumber() == 5 {
-                print("fifthWeek : \(expenses[0].fifthWeek_ex)")
-            }
         }
     }
     
